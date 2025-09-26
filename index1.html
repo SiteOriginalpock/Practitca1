@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orarul Cursurilor</title>
+  <link rel="stylesheet" href="styles1.css" />
+   <script src="script.js" defer></script>
+   <script src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  
+</head>
+<body>
+  <div class="container">
+
+    <!-- Logo + Universitatea -->
+    <header>
+      <img src="logo_usarb.png" alt="Logo Universitate" class="logo">
+      <h2>UNIVERSITATEA DE STAT „ALECU RUSSO” DIN BĂLȚI</h2>
+    </header>
+
+    <!-- Titlul Orar -->
+    <section class="top-section">
+      <h1>Orarul Cursurilor</h1>
+    </section>
+
+    <!-- Conținutul principal (două coloane) -->
+    <div class="main-content">
+
+      <!-- Panou stânga -->
+      <aside>
+        <!-- Butoane Grupe, Profesori, Aule -->
+        <div class="nav-buttons">
+          <button class="btn green">Grupe</button>
+          <button class="btn green">Profesori</button>
+          <button class="btn green">Aule</button>
+        </div>
+
+        <!-- Regim -->
+        <label class="regim"><input type="checkbox"> Regim pentru student</label>
+
+        <!-- Căutare + Selecturi -->
+        <input type="text" id="searchInput" placeholder="Caută profesor, grupă sau aulă..." class="search">
+
+        <select id="listSelect" class="select" size="10"></select>
+
+       <select id="month" class="select">
+  <option>Ianuarie</option>
+  <option>Februarie</option>
+  <option>Martie</option>
+  <option>Aprilie</option>
+  <option>Mai</option>
+  <option>Iunie</option>
+  <option>Iulie</option>
+  <option>August</option>
+  <option>Septembrie</option>
+  <option>Octombrie</option>
+  <option>Noiembrie</option>
+  <option>Decembrie</option>
+</select>
+        <!-- Săptămâna / săptămâna în lună (rămâne pentru JS) -->
+        <select id="week" class="select">
+  <!-- Aici se generează dinamic prin JS -->
+</select>
+
+        <!-- BUTOANE ADĂUGATE ÎN STÂNGA -->
+        <div class="extra-buttons">
+          <button id="monthly-btn" class="btn green">Orar lunar</button>
+           <button id="google-sync" class="btn google">Sincronizare Google</button>
+    
+        </div>
+
+        <!-- Tabel cu zilele (rămâne) -->
+        <table class="days-table">
+          <tr><td>L </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>Ma </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>Mi </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>J </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>V </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>S </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>D </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+
+        <!-- Legendă + Butoane + Info -->
+        <div class="centered-block">
+          <div class="legend">
+            <p>P - Prelegere &nbsp; | &nbsp; S - Seminar &nbsp; | &nbsp; L - Laborator</p>
+            <p>PC - Proiect de Curs &nbsp; | &nbsp; EP - Evaluare periodică</p>
+            <p>C - Consultație &nbsp; | &nbsp; E - Examinare &nbsp; | &nbsp; R - Reexaminare</p>
+            <p>SP - Seminar prealabil &nbsp; | &nbsp; ST - Seminar de totalizare</p>
+          </div>
+
+          <div class="bottom-buttons">
+            <button class="btn green">Descarcă orar</button>
+            <button class="btn red">Examene</button>
+            <button class="btn purple">Planificare</button>
+          </div>
+
+          <p class="info">Serviciul este inactiv între ore 23:00 și 3:00</p>
+        </div>
+      </aside>
+
+      <!-- Panou dreapta (orarul mare) -->
+      <!-- Panou dreapta (orarul mare) -->
+<main>
+
+  <!-- Navigare săptămâni -->
+  <div class="navigation">
+    <button class="btn green prev">◀ </button>
+    <button class="btn green next">▶</button>
+  </div>
+
+  <!-- Zilele săptămânii -->
+  <div class="week-days">
+    <button class="day">Luni</button>
+    <button class="day">Marți</button>
+    <button class="day">Miercuri</button>
+    <button class="day">Joi</button>
+    <button class="day">Vineri</button>
+    <button class="day">Sâmbătă</button>
+    <button class="day">Duminică</button>
+  </div>
+
+  <!-- Tabelul orarului -->
+  <table class="schedule">
+    <tr><td class="hour">8:00 - 9:30</td><td class="lesson"></td></tr>
+    <tr><td class="hour">9:45 - 11:15</td><td class="lesson"></td></tr>
+    <tr><td class="hour">11:30 - 13:00</td><td class="lesson"></td></tr>
+    <tr><td class="hour">13:15 - 14:45</td><td class="lesson"></td></tr>
+    <tr><td class="hour">15:00 - 16:30</td><td class="lesson"></td></tr>
+    <tr><td class="hour">16:45 - 18:15</td><td class="lesson"></td></tr>
+    <tr><td class="hour">18:30 - 20:00</td><td class="lesson"></td></tr>
+  </table>
+
+  <!-- Calendar lunar (ascuns inițial) -->
+<div id="monthly-calendar" class="calendar hidden"></div>
+
+
+</main>
+
+
+
+    </div>
+  </div>
+
+</body>
+
+</html>
