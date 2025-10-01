@@ -170,47 +170,87 @@ document.addEventListener("DOMContentLoaded", function () {
   // --------------------------
   // Google Calendar API
   // --------------------------
-  const CLIENT_ID = "760713998254-7oc6hu9scdq8nbo8b3vsgpn231d5g32f.apps.googleusercontent.com"; 
-  const API_KEY = "AIzaSyAwVxLuuS6FHaWKaC7Ikpl2F3Kr0EAL1lg"; 
-  const SCOPES = "https://www.googleapis.com/auth/calendar";
+  const CLIENT_ID = "1032261024939-1q9aebj74buitf610ho5h1vbbos1gt8b.apps.googleusercontent.com"; 
+const API_KEY = "AIzaSyAxKPwwvJgEAhF69E56TfMa8Zev-iI4w0U"; 
+const SCOPES = "https://www.googleapis.com/auth/calendar";
 
-  function initClient() {
-    gapi.client.init({
-      apiKey: API_KEY,
-      clientId: CLIENT_ID,
-      discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
-      scope: SCOPES,
-    }).then(() => {
-      console.log("Google API gata!");
-    });
+function initClient() {
+  gapi.client.init({
+    apiKey: API_KEY,
+    clientId: CLIENT_ID,
+    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+    scope: SCOPES
+  }).then(() => {
+    console.log("Google API gata!");
+  });
+}
+
+function handleAuthClick() {
+  const auth = gapi.auth2.getAuthInstance();
+  if (!auth) {
+    alert("Google API nu este încărcat. Reîncearcă după câteva secunde.");
+    return;
   }
+  auth.signIn().then(() => {
+    console.log("Autentificat!");
+    adaugaInCalendar();
+  });
+}
 
-  function handleAuthClick() {
-    const authInstance = gapi.auth2.getAuthInstance();
-    authInstance.signIn().then(() => {
-      alert("Te-ai logat în Google!");
-    });
-  }
+function adaugaInCalendar() {
+  const event = {
+    summary: "Curs: Programare Web",
+    location: "Universitatea X",
+    description: "Orar sincronizat din aplicația mea",
+    start: { dateTime: "2025-10-01T10:00:00+03:00", timeZone: "Europe/Chisinau" },
+    end:   { dateTime: "2025-10-01T12:00:00+03:00", timeZone: "Europe/Chisinau" }
+  };
 
-  function addLessonToCalendar(lesson, aula, profesor, start, end) {
-    const event = {
-      summary: lesson,
-      location: aula,
-      description: "Profesor: " + profesor,
-      start: { dateTime: start, timeZone: "Europe/Chisinau" },
-      end: { dateTime: end, timeZone: "Europe/Chisinau" }
-    };
+  gapi.client.calendar.events.insert({
+    calendarId: "primary",
+    resource: event
+  }).then(resp => {
+    console.log("Eveniment adăugat:", resp);
+    alert("Orarul a fost sincronizat cu Google Calendar!");
+  });
+}
 
-    gapi.client.calendar.events.insert({
-      calendarId: "primary",
-      resource: event,
-    }).then((resp) => {
-      console.log("Adăugat în Calendar:", resp);
-    });
-  }
+// La final, când pagina se încarcă
+window.addEventListener("load", () => {
+  gapi.load('client:auth2', initClient);
+});
 
-  gapi.load("client:auth2", initClient);
+// Legăm butonul de sincronizare
+googleButton.addEventListener("click", handleAuthClick);
 
+
+/**
+ * Adaugă un eveniment de test în Calendar
+ */
+function adaugaInCalendar() {
+  const event = {
+    summary: "Curs: Programare Web",
+    location: "Universitatea X",
+    description: "Orar sincronizat din aplicația mea",
+    start: {
+      dateTime: "2025-10-01T10:00:00+03:00",
+      timeZone: "Europe/Chisinau",
+    },
+    end: {
+      dateTime: "2025-10-01T12:00:00+03:00",
+      timeZone: "Europe/Chisinau",
+    },
+  };
+
+  gapi.client.calendar.events.insert({
+    calendarId: "primary",
+    resource: event,
+  }).then((resp) => {
+    console.log("Eveniment adăugat:", resp);
+    alert("Orarul a fost sincronizat cu Google Calendar!");
+  });
+}
+  googleButton.addEventListener("click", handleAuthClick);
   // --------------------------
   // Evenimente UI
   // --------------------------
